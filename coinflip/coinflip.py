@@ -10,7 +10,7 @@ wallet_private_key = os.getenv("WALLET_PRIVATE_KEY")
 wallet_address = os.getenv("WALLET_ADDRESS")
 w3 = web3.Web3(web3.HTTPProvider(os.getenv("WEB3_PROVIDER")))
 
-contract_address = "0xA9Ec54b590554F5005bb093933e1a7a260B1a918"
+contract_address = "0xCONTRACTADDRESS"
 
 # function to read contract source code, then return both the abi and bytecode
 def read_source_return_abi_bytecode(contract_file, w3):

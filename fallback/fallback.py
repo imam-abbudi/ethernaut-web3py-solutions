@@ -10,7 +10,7 @@ wallet_private_key = os.getenv("WALLET_PRIVATE_KEY")
 wallet_address = os.getenv("WALLET_ADDRESS")
 w3 = web3.Web3(web3.HTTPProvider(os.getenv("WEB3_PROVIDER")))
 
-contract_address = "0x03fDcC5354b76bdbbc5671b0a6fB3bc1725B6B2f"
+contract_address = "0xCONTRACTADDRESS"
 
 # function to read contract source code, generate an abi, and create a contract object
 def read_contract_return_abi(contract_file, contract_address, w3):
