@@ -59,6 +59,8 @@ def main():
 
     if unlock_tx_receipt["status"] == 1:
         print("Vault unlocked! Try submitting on Ethernaut.")
+    else:
+        print("Vault still locked. Try debugging the transaction.")
 
 if __name__ == "__main__":
     main()
